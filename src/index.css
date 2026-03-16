@@ -17,6 +17,10 @@
     @apply bg-turbo-black font-mono overflow-hidden text-[12px] leading-[1.8] w-screen h-screen;
     image-rendering: pixelated;
   }
+  
+  button, a {
+    @apply outline-none;
+  }
 }
 
 /* Custom scrollbar for retro feel */
