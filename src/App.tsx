@@ -32,6 +32,9 @@ export default function App() {
   const [isOpenFileDialogOpen, setIsOpenFileDialogOpen] = useState(false);
   const [selectedFileInDialog, setSelectedFileInDialog] = useState<string | null>(null);
   const [openedFile, setOpenedFile] = useState<FileType>(null);
+  const [sessionStartTime] = useState(new Date());
+  const [selectedProjectFile, setSelectedProjectFile] = useState<string | null>(null);
+  const [cpuLoad, setCpuLoad] = useState<number[]>(Array(20).fill(0));
   const [terminalState, setTerminalState] = useState<TerminalState>({
     isRunning: false,
     file: null,
@@ -303,23 +306,44 @@ int main() {
   const projects: Project[] = [
     {
       id: '1',
-      title: 'VINTAGE_OS.EXE',
+      title: 'PHOEQUILLS.EXE',
       description: 'A browser-based operating system simulation with classic UI components.',
       tags: ['React', 'TypeScript', 'Tailwind'],
       link: '#'
     },
     {
       id: '2',
-      title: 'ALGO_VIZ.CPP',
+      title: 'CIVI-CONNECT.CPP',
       description: 'Visualizing complex sorting and pathfinding algorithms in real-time.',
       tags: ['D3.js', 'JavaScript', 'Algorithms'],
       link: '#'
     },
     {
       id: '3',
-      title: 'NEURAL_NET.PY',
+      title: 'UNI-VERSE.PY',
       description: 'Simple neural network implementation from scratch for digit recognition.',
       tags: ['Python', 'NumPy', 'ML'],
+      link: '#'
+    },
+    {
+      id: '4',
+      title: 'CODE_RONINS.ASM',
+      description: 'Low-level performance optimization and security research toolkit.',
+      tags: ['Assembly', 'C', 'Security'],
+      link: '#'
+    },
+    {
+      id: '5',
+      title: 'PROMPTBUD.AI',
+      description: 'AI-powered assistant for generating and optimizing complex prompts.',
+      tags: ['LLM', 'Node.js', 'API'],
+      link: '#'
+    },
+    {
+      id: '6',
+      title: 'XAMPLORE.DB',
+      description: 'A comprehensive database explorer for relational and non-relational data.',
+      tags: ['SQL', 'NoSQL', 'Database'],
       link: '#'
     }
   ];
@@ -337,6 +361,40 @@ int main() {
       period: '2020 - 2022',
       description: 'Built high-performance web applications with a focus on UX.'
     }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCpuLoad(prev => [...prev.slice(1), Math.floor(Math.random() * 100)]);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const projectFiles = {
+    'SOURCE/Performance': 'Performance is not an optimization; it is a feature. A slow app is a broken app.',
+    'SOURCE/Accessibility': 'Accessibility is mandatory. The web is for everyone, regardless of ability.',
+    'SOURCE/CodeHumans': 'Code is for humans to read, and only incidentally for machines to execute.',
+    'INCLUDE/Ada': 'The first programmer. She saw the potential for machines to do more than just math.',
+    'INCLUDE/Newton': 'If I have seen further, it is by standing on the shoulders of giants.',
+    'INCLUDE/Ritchie': 'The creator of C. Without him, modern computing wouldn\'t exist.',
+    'INCLUDE/Guido': 'Benevolent Dictator for Life. Python made coding accessible to millions.',
+    'INCLUDE/Jobs': 'Design is not just what it looks like and feels like. Design is how it works.',
+    'LIBS/WebGL': 'Bringing high-performance 3D graphics to the browser.',
+    'LIBS/GSAP': 'The gold standard for high-performance web animations.',
+    'LIBS/Framer': 'Bridging the gap between design and production code.',
+    'LIBS/VSCode': 'The ultimate tool for modern software craftsmanship.',
+    'LIBS/Spotify': 'Fueling the coding sessions with the perfect soundtrack.'
+  };
+
+  const systemLogs = [
+    { time: '09:42:01', event: 'System initialized successfully.' },
+    { time: '09:42:05', event: 'Loading career_milestones.dat...' },
+    { time: '09:42:10', event: 'Milestone reached: 50+ Web Projects completed.' },
+    { time: '09:42:15', event: 'New Skill detected: Advanced WebGL Optimization.' },
+    { time: '09:42:20', event: 'Security audit passed: 0 vulnerabilities found.' },
+    { time: '09:42:25', event: 'Connection established with remote_portfolio_v3.' },
+    { time: '09:42:30', event: 'Optimizing memory for creative_processes...' },
+    { time: '09:42:35', event: 'Ready for new challenges and collaborations.' }
   ];
 
   const renderContent = () => {
@@ -431,7 +489,7 @@ int main() {
             <div className="space-y-16">
               {experiences.map((exp, i) => (
                 <div key={i} className="relative pl-10 border-l-2 border-turbo-cyan">
-                  <div className="absolute -left-[9px] top-0 w-4 h-4 bg-turbo-cyan rounded-full" />
+                  <div className="absolute -left-[9px] top-0 w-4 h-4 bg-turbo-cyan" />
                   <h3 className="text-turbo-cyan text-[12px] md:text-sm font-bold leading-relaxed">{exp.role} @ {exp.company}</h3>
                   <p className="text-[10px] text-turbo-gray mt-3 mb-6">{exp.period}</p>
                   <p className="text-turbo-white text-[12px] md:text-sm leading-[2.2]">{exp.description}</p>
@@ -524,22 +582,213 @@ int main() {
                 </thead>
                 <tbody>
                   <tr className="leading-loose">
-                    <td className="border border-turbo-white p-4">coffee_level</td>
+                    <td className="border border-turbo-white p-4 text-turbo-green">coffee_level</td>
                     <td className="border border-turbo-white p-4 text-turbo-yellow">0x7FFFFFFF</td>
                   </tr>
                   <tr className="leading-loose">
-                    <td className="border border-turbo-white p-4">is_coding</td>
+                    <td className="border border-turbo-white p-4 text-turbo-green">is_coding</td>
                     <td className="border border-turbo-white p-4 text-turbo-yellow">TRUE</td>
                   </tr>
                   <tr className="leading-loose">
-                    <td className="border border-turbo-white p-4">bugs_found</td>
+                    <td className="border border-turbo-white p-4 text-turbo-green">bug_found</td>
                     <td className="border border-turbo-white p-4 text-turbo-yellow">0</td>
+                  </tr>
+                  <tr className="leading-loose">
+                    <td className="border border-turbo-white p-4 text-turbo-green">projects</td>
+                    <td className="border border-turbo-white p-4 text-turbo-yellow">6+</td>
+                  </tr>
+                  <tr className="leading-loose">
+                    <td className="border border-turbo-white p-4 text-turbo-green">Portfolios</td>
+                    <td className="border border-turbo-white p-4 text-turbo-yellow">4.0</td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div className="p-6 border border-turbo-red bg-turbo-red/10">
               <p className="text-turbo-red text-[12px] md:text-sm font-bold leading-relaxed">BREAKPOINT REACHED AT LINE 1024</p>
+            </div>
+          </div>
+        );
+      case 'PROJECT':
+        return (
+          <div className="flex flex-col md:flex-row gap-8 h-full overflow-hidden">
+            <div className="w-full md:w-1/3 border-r border-turbo-cyan/30 pr-4 overflow-y-auto">
+              <h2 className="text-turbo-yellow mb-6">ROOT/</h2>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-turbo-cyan mb-2">├── SOURCE/</p>
+                  <div className="pl-8 space-y-2">
+                    <button onClick={() => setSelectedProjectFile('SOURCE/Performance')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'SOURCE/Performance' ? 'text-turbo-yellow underline' : ''}`}>Performance.txt</button>
+                    <button onClick={() => setSelectedProjectFile('SOURCE/Accessibility')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'SOURCE/Accessibility' ? 'text-turbo-yellow underline' : ''}`}>Accessibility.txt</button>
+                    <button onClick={() => setSelectedProjectFile('SOURCE/CodeHumans')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'SOURCE/CodeHumans' ? 'text-turbo-yellow underline' : ''}`}>CodeHumans.txt</button>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-turbo-cyan mb-2">├── INCLUDE/</p>
+                  <div className="pl-8 space-y-2">
+                    <button onClick={() => setSelectedProjectFile('INCLUDE/Ada')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'INCLUDE/Ada' ? 'text-turbo-yellow underline' : ''}`}>Ada_Lovelace.h</button>
+                    <button onClick={() => setSelectedProjectFile('INCLUDE/Newton')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'INCLUDE/Newton' ? 'text-turbo-yellow underline' : ''}`}>Newton.h</button>
+                    <button onClick={() => setSelectedProjectFile('INCLUDE/Ritchie')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'INCLUDE/Ritchie' ? 'text-turbo-yellow underline' : ''}`}>Dennis_Ritchie.h</button>
+                    <button onClick={() => setSelectedProjectFile('INCLUDE/Guido')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'INCLUDE/Guido' ? 'text-turbo-yellow underline' : ''}`}>Guido_Van_Rossum.h</button>
+                    <button onClick={() => setSelectedProjectFile('INCLUDE/Jobs')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'INCLUDE/Jobs' ? 'text-turbo-yellow underline' : ''}`}>Steve_Jobs.h</button>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-turbo-cyan mb-2">└── LIBS/</p>
+                  <div className="pl-8 space-y-2">
+                    <button onClick={() => setSelectedProjectFile('LIBS/WebGL')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'LIBS/WebGL' ? 'text-turbo-yellow underline' : ''}`}>WebGL.lib</button>
+                    <button onClick={() => setSelectedProjectFile('LIBS/GSAP')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'LIBS/GSAP' ? 'text-turbo-yellow underline' : ''}`}>GSAP.lib</button>
+                    <button onClick={() => setSelectedProjectFile('LIBS/Framer')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'LIBS/Framer' ? 'text-turbo-yellow underline' : ''}`}>Framer.lib</button>
+                    <button onClick={() => setSelectedProjectFile('LIBS/VSCode')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'LIBS/VSCode' ? 'text-turbo-yellow underline' : ''}`}>VSCode.lib</button>
+                    <button onClick={() => setSelectedProjectFile('LIBS/Spotify')} className={`block hover:text-turbo-yellow ${selectedProjectFile === 'LIBS/Spotify' ? 'text-turbo-yellow underline' : ''}`}>Spotify.lib</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex-1 bg-turbo-blue/20 p-6 border border-turbo-cyan/30 overflow-y-auto">
+              {selectedProjectFile ? (
+                <div className="space-y-4">
+                  <h3 className="text-turbo-cyan border-b border-turbo-cyan pb-2">{selectedProjectFile}</h3>
+                  <p className="text-turbo-white leading-relaxed italic">
+                    "{projectFiles[selectedProjectFile as keyof typeof projectFiles]}"
+                  </p>
+                  <div className="mt-8 p-4 bg-turbo-black border border-turbo-gray/30">
+                    <p className="text-turbo-gray text-xs mb-2">// Definition</p>
+                    <code className="text-turbo-green block whitespace-pre-wrap">
+                      {`class ${selectedProjectFile.split('/')[1]} {\n  public:\n    void execute() {\n      // Implementation details hidden\n    }\n};`}
+                    </code>
+                  </div>
+                </div>
+              ) : (
+                <div className="h-full flex items-center justify-center text-turbo-gray/50 italic">
+                  Select a file to view more about me...
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      case 'OPTIONS':
+        return (
+          <div className="space-y-8 h-full overflow-y-auto pb-8">
+            <h2 className="text-turbo-yellow">MY_VIBE.CFG</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div className="bg-turbo-blue/30 p-6 border border-turbo-cyan">
+                  <h3 className="text-turbo-cyan mb-4 flex items-center gap-2">
+                    <Play size={16} /> CURRENT_TRACK
+                  </h3>
+                  <p className="text-turbo-white font-bold mb-2">Mystical Magical</p>
+                  <p className="text-turbo-gray text-sm mb-4">Benson Boone</p>
+                  <a 
+                    href="https://open.spotify.com/track/4P99pY7q6X7X9X7X9X7X9X" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-turbo-yellow hover:underline text-xs flex items-center gap-2"
+                  >
+                    OPEN IN SPOTIFY →
+                  </a>
+                </div>
+
+                <div className="bg-turbo-red/10 p-6 border border-turbo-red">
+                  <h3 className="text-turbo-red mb-4 flex items-center gap-2">
+                    <Search size={16} /> TRAVEL_DESTINATION
+                  </h3>
+                  <p className="text-turbo-white">Paris, France</p>
+                </div>
+              </div>
+
+              <div className="bg-turbo-cyan/10 p-6 border border-turbo-cyan">
+                <h3 className="text-turbo-cyan mb-4 flex items-center gap-2">
+                  <FolderOpen size={16} /> TRAVELLED_SO_FAR
+                </h3>
+                <ul className="space-y-2 text-turbo-white text-sm">
+                  <li>• Bangalore</li>
+                  <li>• Chikmangalur</li>
+                  <li>• Goa</li>
+                  <li>• Chennai</li>
+                  <li>• Ahmedabad</li>
+                  <li>• Mumbai</li>
+                  <li>• Trivandrum</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-turbo-gray/10 p-8 border border-turbo-gray italic">
+              <p className="text-turbo-white leading-loose text-center">
+                "Traveling leaves you speechless, then turns you into a storyteller. 
+                Music is the soundtrack to those stories."
+              </p>
+            </div>
+          </div>
+        );
+      case 'WINDOW':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full overflow-y-auto pb-8">
+            {/* User Session Window */}
+            <div className="border-2 border-turbo-white bg-turbo-blue flex flex-col">
+              <div className="bg-turbo-gray text-turbo-black px-2 py-0.5 font-bold flex justify-between">
+                <span>SESSION_INFO</span>
+                <span>[■]</span>
+              </div>
+              <div className="p-6 flex flex-col items-center justify-center flex-1 gap-4">
+                <p className="text-turbo-cyan text-xs">EXPLORATION_TIME</p>
+                <p className="text-3xl text-turbo-yellow font-bold">
+                  {Math.floor((currentTime.getTime() - sessionStartTime.getTime()) / 1000)}s
+                </p>
+                <p className="text-turbo-white text-[10px]">ACTIVE_SESSION_RUNNING</p>
+              </div>
+            </div>
+
+            {/* CPU Load Window */}
+            <div className="border-2 border-turbo-white bg-turbo-blue flex flex-col">
+              <div className="bg-turbo-gray text-turbo-black px-2 py-0.5 font-bold flex justify-between">
+                <span>BRAIN_ACTIVITY</span>
+                <span>[■]</span>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="flex-1 flex items-end gap-1 h-32">
+                  {cpuLoad.map((load, i) => (
+                    <div 
+                      key={i} 
+                      className="bg-turbo-green w-full" 
+                      style={{ height: `${load}%` }}
+                    />
+                  ))}
+                </div>
+                <div className="mt-4 flex justify-between text-[10px]">
+                  <span className="text-turbo-cyan">LOAD: {cpuLoad[cpuLoad.length-1]}%</span>
+                  <span className="text-turbo-cyan">STATUS: OVERCLOCKING</span>
+                </div>
+              </div>
+            </div>
+
+            {/* System Log Window */}
+            <div className="md:col-span-2 border-2 border-turbo-white bg-turbo-black flex flex-col h-[350px]">
+              <div className="bg-turbo-gray text-turbo-black px-2 py-0.5 font-bold flex justify-between">
+                <span>SYSTEM_LOG.TXT</span>
+                <span>[■]</span>
+              </div>
+              <div className="flex-1 p-6 font-mono text-xs overflow-y-auto bg-turbo-black">
+                <div className="space-y-2">
+                  {systemLogs.map((log, i) => (
+                    <div key={i} className="flex gap-4">
+                      <span className="text-turbo-gray">[{log.time}]</span>
+                      <span className={i % 2 === 0 ? 'text-turbo-green' : 'text-turbo-white'}>
+                        {log.event}
+                      </span>
+                    </div>
+                  ))}
+                  <div className="flex gap-4 animate-pulse">
+                    <span className="text-turbo-gray">[{currentTime.toLocaleTimeString()}]</span>
+                    <span className="text-turbo-cyan">Monitoring system status...</span>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-turbo-blue text-turbo-white px-2 py-1 text-[10px] border-t border-turbo-white flex justify-between">
+                <span>LOG_ENTRIES: {systemLogs.length + 1}</span>
+                <span>STATUS: ONLINE</span>
+              </div>
             </div>
           </div>
         );
